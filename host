@@ -3,6 +3,6 @@ master-01 ansible_host=10.0.9.10
 
 [all:vars]
 ansible_user=root
-ansible_ssh_pass=Vtcopenstack2022
+ansible_ssh_pass=PassWord
 ansible_python_interpreter=/usr/bin/python3
 
