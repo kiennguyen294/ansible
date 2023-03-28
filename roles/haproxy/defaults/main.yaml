@@ -1,0 +1,24 @@
+haproxy_stat_port: 1936
+haproxy_stat_user: admin
+haproxy_stat_passsword: htp2022
+use_ssl: False
+
+### Variables for proxy
+proxies:
+  - name: omipay_api
+    bind_address: 10.0.9.35
+    bind_port: 8080
+    balance: roundrobin
+    mode: http
+    servers:
+      - name: api_01
+        bind: 10.0.9.16:8080
+      - name: api_02
+        bind: 10.0.9.17:8080
+
+use_ssl: False
+
+certs:
+  - name: omipay
+    dest: /etc/ssl/omipay.pem
+    src: ../../group_vars/omipay.pem

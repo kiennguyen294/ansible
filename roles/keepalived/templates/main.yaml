@@ -1,0 +1,36 @@
+---
+# This role installs HAProxy and configures it.
+
+- name: Download and install haproxy
+  apt:
+    name: haproxy
+    state: present
+    update_cache: yes
+
+- name: Ensure nonlocal bind kernel parameter is set
+  sysctl: >
+    name=net.ipv4.ip_nonlocal_bind
+    value=1
+    state=present
+    ignoreerrors=yes
+
+- name: Ensure ipv4 forward parameter is set
+  sysctl: >
+    name=net.ipv4.ip_forward
+    value=1
+    state=present
+    ignoreerrors=yes
+
+- import_tasks: ssl.yml
+  when: use_ssl
+
+- name: Configure the haproxy cnf file with hosts
+  template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+  notify:
+    - restart haproxy
+
+- name: Start the haproxy service
+  service:
+    name: haproxy
+    state: started
+    enabled: yes

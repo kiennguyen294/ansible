@@ -1,0 +1,6 @@
+- name: Copy Certificate Combine name
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+  with_items: "{{ certs }}"

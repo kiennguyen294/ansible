@@ -1,0 +1,12 @@
+users_create_homedirs: yes
+users_default_shell: /bin/bash
+
+users_deleted: []
+
+users:
+  - kiennn
+
+users_info:
+  - user: kiennn
+    fullname: "Nguyen Ngoc Kien"
+    authorized_keys: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3ZD6uGrhT2AEtL1YnbqviDTEqXTHvr+UgGnxgSAU5cPwsKkXe4Rquww6RX9UcCAM5nyrFrLQxaXp2SgzMGPIbNF22XyvZbrsKrTkzs/r5mDTvPgTvQEDL/anmpbD9v3gkk1nZ9TT28FngSnovL7O5K/viGc9nSIe4inAURMLcJnygacnR7FGCkwghzWx7Bc/aNFqA2Eti82EN5UoNWP09pBvMrbiuNWdVGkPBTJEbd9V4kZecGHVy7c5Z9v0tA+QuphIXQ1R+X3+B/nc8fTXEVTSzmmz1ih/m0QRGfP2Kkw7/3eM1/jSO+QixxzCnSXiNE2uC1deYkRYba61lXm3o/fO2H2okl2YEB2uv/3sKDejONCgLbl/KoXchXjgBbf3T4gTwCFBbVknJI1UFp4ZlZnlhtZTHaWhe4vVCvqObHaKlq+sHs32+hGxMvNn023s4AgXmOvaJQRaAid1A7jhtIzTpMI8A8yHuiXbzs94XJtX7fvSSkEI7dQTBoWfUbFs= master@master

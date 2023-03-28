@@ -1,0 +1,53 @@
+---
+
+# - include_vars:
+#     file: /home/master/Ansible/adduser/group_vars/all
+#     name: item
+- debug: msg=" Create User {{ users }} "
+- debug: msg=" Remove User {{ users_deleted }}"
+
+# - debug: msg=" item_0 {{ item[0] }}"
+
+# - debug: msg=" authorized_keys {{item[1]..authorized_keys}}"
+
+# - name: debug user
+# debug:
+# msg: "{{ item[0] }}"
+- name: Create admin users
+  user:
+    name: "{{item[1].user}}"
+    comment: "{{item[1].fullname}}"
+    shell: "{{ users_default_shell }}"
+    createhome: "{{ users_create_homedirs }}"
+    state: present
+  with_nested:
+    - "{{ users }}"
+    - "{{ users_info }}"
+  when: item[0] == item[1].user
+
+- name: SSH keys
+  authorized_key: user="{{item[1].user}}" key="{{item[1].authorized_keys}}"
+  with_nested:
+    - "{{ users }}"
+    - "{{ users_info }}"
+  when: item[0] == item[1].user
+
+- name: Create user's sudoers file
+  lineinfile:
+    dest: /etc/sudoers.d/{{item[1].user}}
+    regexp: '^{{item[1].user}}'
+    line: '{{item[1].user}} ALL=(ALL) NOPASSWD:ALL'
+    state: present
+    create: yes
+    owner: root
+    group: root
+    mode: 0440
+    validate: 'visudo -cf %s'
+  with_nested:
+    - "{{ users }}"
+    - "{{ users_info }}"
+  when: item[0] == item[1].user
+
+- name: Deleted user removal
+  user: name="{{ item }}" state=absent
+  with_items: "{{users_deleted}}"

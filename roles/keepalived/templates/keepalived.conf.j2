@@ -1,0 +1,40 @@
+{% for track_script in track_scripts %}
+vrrp_script {{track_script.name}} {
+    script "killall -0 {{track_script.process}}"
+    interval 2
+}
+{% endfor %}
+
+vrrp_sync_group VG_1 {
+    group {
+        {{ keepalived_group }}
+    }
+}
+
+vrrp_instance {{ keepalived_group }} {
+    state {{ keepalived_state }}
+    interface {{ bind_interface }}
+    virtual_router_id {{ keepalived_routerid }}
+    dont_track_primary
+    priority {{ keepalived_priority }}
+    preempt_delay 30
+    garp_master_delay 1
+    advert_int 2
+    authentication {
+        auth_type PASS
+        auth_pass {{ keepalived_auth_pass }}
+    }
+    track_interface {
+        {{ track_interface }}
+    }
+    virtual_ipaddress {
+      {% for i in vips %}
+        {{ i.vip }}/25 dev {{ i.device }}
+      {% endfor %}
+    }
+    track_script {
+      {% for track_script in track_scripts %}
+        {{ track_script.name }}
+      {% endfor %}
+    }
+}

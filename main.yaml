@@ -1,0 +1,7 @@
+- hosts: masters
+  become: yes
+  roles:
+    - {role: adduser, tags: ['adduser']}
+    - {role: ssh_config, tags: ['configSSH']}
+    - {role: change-hostname, tags: ['hostname']}
+    - {role: keepalived, tags: ['keepalived']}
